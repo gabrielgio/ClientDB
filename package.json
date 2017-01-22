@@ -7,7 +7,11 @@
     "bootstrap": "^3.3.7",
     "codemirror": "^5.23.0",
     "electron": "^1.4.15",
-    "jquery": "^3.1.1"
+    "electron-pug": "^1.5.1",
+    "fs-jetpack": "^0.10.5",
+    "jquery": "^3.1.1",
+    "knockout": "^3.4.1",
+    "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
     "electron": "^1.4.1"
