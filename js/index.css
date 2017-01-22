@@ -1,0 +1,14 @@
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+}
+
+ body {
+    height: 100%;
+}
+.container-fluid {
+    height: 100%;
+}
+.row {
+    height: 100%;
+}
