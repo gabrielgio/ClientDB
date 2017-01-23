@@ -13,7 +13,7 @@ function IndexViewModel() {
     this.document = null
 
     this.load = function () {
-        self.document = new DocumentDB('https://uvk-dev-db.documents.azure.com:443/', 'vNUGSKBYbi8dgmQ5Wuic8RAvh4o7XrRAMjGgWuTLXdee3oLFKbUUOXBa0TzvkqAJf4LYOaZjPH6v9GfJV9Dhdg==', 'db')
+        self.document = new DocumentDB('', '', '')
         self.loading(true)
         self.document.getOrCreate(function (err, database) {
             var querySpec = {
