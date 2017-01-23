@@ -19,9 +19,16 @@ html
                             div.progress-bar.progress-bar-striped.active(role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
         nav.navbar.navbar-default.navbar-inverse.navbar-static-top
             div.container-fluid
-                div.navbar-header
-                    button.btn.btn-default.navbar-btn(data-bind='click: runCode')
-                        span.glyphicon.glyphicon-play
+                div.collapse.navbar-collapse
+                    div.nav.navbar-nav
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false') Links
+                            ul.dropdown-menu(data-bind='foreach: links')
+                                li
+                                    a(data-bind='text: id, click: $root.selectedLink')
+                    div.navbar-form.navbar-right
+                        button.btn.btn-default.navbar-btn(data-bind='click: runCode')
+                            span.glyphicon.glyphicon-play
         div.container-fluid
             div.row
                 div.col-xs-6
