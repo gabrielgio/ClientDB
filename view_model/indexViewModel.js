@@ -7,29 +7,41 @@ function IndexViewModel() {
     this.loading = ko.observable(false)
     this.loadingMsg = ko.observable('Loading database')
     this.codeOut = ko.observable('{\n\t"hello" : "world"\n}')
+    this.links = ko.observableArray()
+    this.selectedLink = ko.observable()
 
     this.document = null
 
-    this.load = function(){
-        self.document = new DocumentDB('', '', '')
+    this.load = function () {
+        self.document = new DocumentDB('https://uvk-dev-db.documents.azure.com:443/', 'vNUGSKBYbi8dgmQ5Wuic8RAvh4o7XrRAMjGgWuTLXdee3oLFKbUUOXBa0TzvkqAJf4LYOaZjPH6v9GfJV9Dhdg==', 'db')
         self.loading(true)
         self.document.getOrCreate(function (err, database) {
-            self.loading(false)
+            var querySpec = {
+                query: 'select * from master m'
+            };
+            self.document.queryCollections(querySpec, function (err, obj) {
+                self.loading(false)
+                self.links.push(obj[0])
+                self.selectedLink(obj[0])
+            })
         })
     }
-    
+
     this.runCode = function () {
 
         //TODO: remove codeInput, all data access should be made throughout databinding
         var querySpec = {
             query: codeInput.getValue(),
         };
-        self.loadingMsg('Running query')
-        self.loading(true)
-        self.document.queryCollections(querySpec, function (err, obj) {
+
+        self.document.queryDocument(self.selectedLink()._self, querySpec, function (err, obj) {
             self.loading(false)
             self.codeOut(JSON.stringify(obj, null, 2) || 'empty')
         })
+
+        self.loadingMsg('Running query')
+        self.loading(true)
+
     }
 
 }
