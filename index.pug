@@ -1,0 +1,20 @@
+html
+    head
+        title ClientDB
+        meta(charset='UTF-8')
+        meta(name="viewport" content="width=device-width")
+
+        link(rel='stylesheet' href='./node_modules/bootstrap/dist/css/bootstrap.css')
+        link(rel='stylesheet' href='node_modules/bootstrap/dist/css/bootstrap-theme.css')
+    body
+        app
+    script(src='./node_modules/core-js/client/shim.min.js')
+    script(src='./node_modules/zone.js/dist/zone.js')
+    script(src='./node_modules/reflect-metadata/Reflect.js')
+    script(src='./node_modules/systemjs/dist/system.src.js')
+    script(src='./systemjs.config.js')
+
+    script.
+        System.import('app').catch(function (err) {
+            console.error(err)
+        });

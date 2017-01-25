@@ -1,10 +1,13 @@
+declare var __dirname
+declare var process
+
+declare function require(name:string)
 const electron = require('electron')
 const app = electron.app
-const BrowserWindow = electron.BrowserWindow
 
+const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
-const pug = require('electron-pug')({pretty: true});
 
 let mainWindow
 
@@ -13,11 +16,11 @@ function createWindow() {
     mainWindow = new BrowserWindow({width: 1000, height: 800})
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '/view/index.pug'),
+        pathname: path.join(__dirname, '/index.html'),
         protocol: 'file:',
         slashes: true
     }))
-    //mainWindow.openDevTools()
+    mainWindow.openDevTools()
     mainWindow.setMenu(null);
 
     mainWindow.on('closed', function () {
