@@ -1,10 +1,5 @@
 #ClientDB
 
-A simple DocumentDB client.
-It is still at an early development stage.
+I'm migrating from ko to angular2 and I only got time to setup the environment. I'll rebuild what is done at master branch to  angular as soon I get time.
 
-To get it running you gotta add a host, key and database manually into /view_model/indeViewModel.js file.
-
-`line 14: self.document = new DocumentDB('{host}', '{key}', '{db}')`
-
-I will add a more "elaborated" system for database management soon.
+ps.: I don't know angular2 so it may take some time til I learn it at some level that I can do something useful.
