@@ -19,6 +19,7 @@
     "codemirror": "^5.23.0",
     "core-js": "^2.4.1",
     "documentdb": "^1.10.1",
+    "documentdb-typescript": "^0.1.1",
     "electron": "^1.4.15",
     "electron-pug": "^1.5.1",
     "flot": "^0.8.0-alpha",
