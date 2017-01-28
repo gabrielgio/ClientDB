@@ -20,7 +20,7 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }))
-    mainWindow.openDevTools()
+    //mainWindow.openDevTools()
     mainWindow.setMenu(null);
 
     mainWindow.on('closed', function () {

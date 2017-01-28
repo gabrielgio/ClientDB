@@ -1,4 +1,16 @@
-div.jumbotron
-    h1.text-center ClientDB
-div.container
-    h1.text-center CONTEUDO
+header.clearfix(id='header' data-me-theme='gray')
+    ul.h-inner
+        li.hi-logo.hidden-xs
+            a ClientDB
+
+section#main
+    aside#sidebar.sidebar.c-overflow.mCustomScrollbar._mCs_1_mCS-autoHide(style='overflow: visible;')
+        div.mCustomScrollBox.mCS-minimal-dark.mCSB_vertical_horizontal.mCSB_outside(style="max-height: none;"  tabindex="0")
+            div#mCSB_1_container.mCSB_container.mCS_x_hidden.mCS_no_scrollbar_x(style='position: relative; top: 0px; left: 0px; width: 100%;' dir='ltr')
+                ul.main-menu
+                    li.active
+                        a Shell
+                            i.zmdi.zmdi-window-maximize
+    section#content
+        div.container
+            codemirror
