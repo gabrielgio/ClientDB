@@ -9,8 +9,10 @@ section#main
             div#mCSB_1_container.mCSB_container.mCS_x_hidden.mCS_no_scrollbar_x(style='position: relative; top: 0px; left: 0px; width: 100%;' dir='ltr')
                 ul.main-menu
                     li.active
-                        a Shell
+                        a(routerLink="/") Connections
+                            i.zmdi.zmdi-view-toc
+                    li.active
+                        a(routerLink="/shell") Shell
                             i.zmdi.zmdi-window-maximize
     section#content
-        div.container
-            codemirror
+        router-outlet
