@@ -1,4 +1,5 @@
-import {Component} from '@angular/core'
+import {Component, Inject} from '@angular/core'
+import {ConnectionService} from '../service/ConnectionService'
 
 declare var $
 declare var CodeMirror
@@ -8,4 +9,24 @@ declare var CodeMirror
     templateUrl: './app/form/form.component.html'
 })
 export class FormComponent {
+    public name: string
+    public host: string
+    public key: string
+
+    private conService: ConnectionService
+
+    constructor(@Inject(ConnectionService) conService: ConnectionService) {
+        this.conService = conService
+    }
+
+    public save(event) {
+        event.preventDefault()
+
+        this.conService.saveConnection({
+            id: this.name,
+            key: this.key,
+            host: this.host
+        })
+    }
+
 }

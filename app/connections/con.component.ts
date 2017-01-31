@@ -1,6 +1,6 @@
 import {Component, AfterContentInit, Inject} from '@angular/core'
-import {ConnectionService} from '../Service/ConnectionService'
-import {Connection} from '../Service/Connection'
+import {ConnectionService} from '../service/ConnectionService'
+import {Connection} from '../service/Connection'
 
 
 @Component({
