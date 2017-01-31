@@ -1,6 +1,6 @@
 div.card
     div.card-header
-        h2 SQL shell
+        h2 Connection
     div.card-body.card-padding
         form((submit)="save($event)")
             div.form-group
@@ -8,10 +8,10 @@ div.card
                     input.form-control.input-lg(placeholder='Name' '[value]'='name' '(input)'='name = $event.target.value')
             div.form-group
                 div.fg-line
-                    input.form-control.input-lg(placeholder='Host' '[value]'='host')
+                    input.form-control.input-lg(placeholder='Host' '[value]'='host' '(input)'='host = $event.target.value')
             div.form-group
                 div.fg-line
-                    input.form-control.input-lg(placeholder='Key' '[value]'='key')
+                    input.form-control.input-lg(placeholder='Key' '[value]'='key' '(input)'='key = $event.target.value')
 
             div.row-fluid
                 div.span4.offset4.text-left

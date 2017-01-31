@@ -8,6 +8,7 @@ import {ConnectionService} from './service/ConnectionService'
 import {FormComponent} from './form/form.component'
 import {IpcService} from "./service/IpcService";
 
+
 @NgModule({
     imports: [BrowserModule, routing],
     declarations: [AppComponent, CodemirrorComponent, ConComponent, FormComponent],

@@ -1,9 +1,9 @@
-import {SaveFile} from './app/Service/IpcService'
+import {SaveFile} from './app/service/IpcService'
 
 declare var __dirname
 declare var process
 
-declare function require(name: string)
+declare function require(name:string)
 const electron = require('electron')
 const jetpack = require('fs-jetpack')
 
@@ -16,6 +16,19 @@ const url = require('url')
 
 let mainWindow
 
+
+ipc.on('loadFile', function(event, arg) {
+    var data = jetpack.read(arg)
+    var objs = data == null ? [] : JSON.parse(data)
+    event.returnValue = objs
+});
+
+ipc.on('saveFile', function(event, arg: SaveFile) {
+    jetpack.write(arg.fileName, JSON.stringify(arg.fileData))
+    event.returnValue = null
+});
+
+
 function createWindow() {
 
     mainWindow = new BrowserWindow({width: 1000, height: 800})
@@ -25,32 +38,8 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
     }))
-    mainWindow.openDevTools()
+    //mainWindow.openDevTools()
     mainWindow.setMenu(null);
-
-    ipc.on('loadFile', function (event, arg) {
-        var data = jetpack.read(arg)
-        event.returnValue = [{
-            id: 'iaskdasjdk',
-            host: 'htt://google.com',
-            key: '89324iuohfdsmnfdsi9u'
-            },
-            {
-                id: 'iaskdasjdk',
-                host: 'htt://google.com',
-                key: '89324iuohfdsmnfdsi9u'
-            },
-            {
-                id: 'iaskdasjdk',
-                host: 'htt://google.com',
-                key: '89324iuohfdsmnfdsi9u'
-            }]
-    });
-
-    ipc.on('saveFile', function (event, arg: SaveFile) {
-        jetpack.write(arg.fileData, [])
-        event.returnValue = null
-    });
 
     mainWindow.on('closed', function () {
         mainWindow = null
@@ -66,6 +55,7 @@ app.on('window-all-closed', function () {
 })
 
 app.on('activate', function () {
+
     if (mainWindow === null) {
         createWindow()
     }
