@@ -5,23 +5,14 @@ div.card
         table.table
             thead
                 tr
-                    th #
                     th Name
                     th Host
                     th key
             tbody
-                tr
-                    td 1
-                    td Sei la
-                    td locaweb.com/documentDB
-                    td UHasjiaspas0-120-132kasi90-12
-                tr
-                    td 2
-                    td Sei la
-                    td locaweb.com/documentDB
-                    td UHasjiaspas0-120-132kasi90-12
-                tr
-                    td 3
-                    td Sei la
-                    td locaweb.com/documentDB
-                    td UHasjiaspas0-120-132kasi90-12
+                tr(*ngFor='let con of cons')
+                    td {{con.id}}
+                    td {{con.host}}
+                    td {{con.key}}
+    div.form-group
+        button.btn.btn-primary.btn-icon.waves-effect.waves-circle.waves-float
+            i.zmdi.zmdi-home(routerLink="/add")
