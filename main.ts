@@ -1,9 +1,14 @@
+import {SaveFile} from './app/Service/IpcService'
+
 declare var __dirname
 declare var process
 
-declare function require(name:string)
+declare function require(name: string)
 const electron = require('electron')
+const jetpack = require('fs-jetpack')
+
 const app = electron.app
+const ipc = electron.ipcMain;
 
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
@@ -22,6 +27,30 @@ function createWindow() {
     }))
     mainWindow.openDevTools()
     mainWindow.setMenu(null);
+
+    ipc.on('loadFile', function (event, arg) {
+        var data = jetpack.read(arg)
+        event.returnValue = [{
+            id: 'iaskdasjdk',
+            host: 'htt://google.com',
+            key: '89324iuohfdsmnfdsi9u'
+            },
+            {
+                id: 'iaskdasjdk',
+                host: 'htt://google.com',
+                key: '89324iuohfdsmnfdsi9u'
+            },
+            {
+                id: 'iaskdasjdk',
+                host: 'htt://google.com',
+                key: '89324iuohfdsmnfdsi9u'
+            }]
+    });
+
+    ipc.on('saveFile', function (event, arg: SaveFile) {
+        jetpack.write(arg.fileData, [])
+        event.returnValue = null
+    });
 
     mainWindow.on('closed', function () {
         mainWindow = null
