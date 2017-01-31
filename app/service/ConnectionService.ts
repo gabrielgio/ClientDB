@@ -2,7 +2,6 @@ import {Injectable, Inject} from '@angular/core'
 import {Connection} from './Connection'
 import {IpcService} from "./IpcService";
 
-declare var ipcRenderer
 
 @Injectable()
 export class ConnectionService {
@@ -14,7 +13,9 @@ export class ConnectionService {
     }
 
     public saveConnection(con: Connection) {
-        console.log(ipcRenderer.sendSync('save', 'ping'))
+        var cons = this.loadData()
+        cons.push(con)
+        this.saveData(cons)
     }
 
     public getConnection(id: string): Connection {
@@ -30,13 +31,13 @@ export class ConnectionService {
     }
 
     private loadData(): Connection[] {
-        return <Connection[]> this.ipc.loadFile('config.json')
+        return <Connection[]> this.ipc.loadFile('./config.json')
     }
 
     private saveData(cons: Connection[]) {
         this.ipc.saveFile({
             fileData: cons,
-            fileName: 'config.json'
+            fileName: './config.json'
         });
     }
 }
