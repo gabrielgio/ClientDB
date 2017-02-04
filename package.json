@@ -1,0 +1,31 @@
+{
+  "name": "clientdb",
+  "description": "After i went through several bugs (mainly coused by misconfiguration) I thought to start from scrath to clean up the project a bit.",
+  "version": "0.1.0",
+  "main": "index.js",
+  "dependencies": {
+    "electron": "^1.4.15"
+  },
+  "devDependencies": {
+    "electron": "^1.4.15"
+  },
+  "scripts": {
+    "start": "electron index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielgio/ClientDB.git"
+  },
+  "keywords": [
+    "angular2",
+    "electron",
+    "documentdb"
+  ],
+  "author": "Gabriel Giovanini",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/gabrielgio/ClientDB/issues"
+  },
+  "homepage": "https://github.com/gabrielgio/ClientDB#readme"
+}
