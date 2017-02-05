@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core'
 import {Router} from '@angular/router'
 import {ConnectionService} from '../service/conService'
+import {IpcService} from '../service/ipcService'
 
 @Component({
     selector: 'add',
@@ -13,10 +14,23 @@ export class AddComponent {
 
     private conService: ConnectionService
     private router: Router
+    private ipc: IpcService
 
-    constructor(@Inject(ConnectionService) conService: ConnectionService, @Inject(Router)router: Router) {
+    constructor(@Inject(ConnectionService) conService: ConnectionService, @Inject(Router)router: Router, @Inject(IpcService)ipc: IpcService) {
         this.conService = conService
-        this.router = router;
+        this.router = router
+        this.ipc = ipc
+    }
+
+    public testCon(event) {
+        var info = this.ipc.getInfo({
+            host: this.host,
+            id: this.name,
+            key: this.key
+        })
+
+        if(info)
+            alert('NAO FOI KRL!')
     }
 
     public save(event) {
