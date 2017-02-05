@@ -1,5 +1,6 @@
 /// <reference path="typings/index.d.ts" />
 
+import {Client} from 'documentdb-typescript'
 import electron = require('electron')
 
 //TODO: I shall remove this line as soon I find out how to solve this namespace bug
@@ -15,15 +16,23 @@ let Menu = electron.Menu
 
 let mainWindow: Electron.BrowserWindow
 
-ipc.on('loadFile', function(event, arg) {
+ipc.on('loadFile', function (event, arg) {
     var data = jetpack.read(arg)
     var objs = data == null ? [] : JSON.parse(data)
     event.returnValue = objs
 });
 
-ipc.on('saveFile', function(event, arg) {
+ipc.on('saveFile', function (event, arg) {
     jetpack.write(arg.fileName, JSON.stringify(arg.fileData))
     event.returnValue = null
+});
+
+
+ipc.on('getInfo', async function (event, arg) {
+    var client = new Client(arg.host, arg.key)
+    var item = await client.listDatabasesAsync()
+    event.returnValue = item;
+
 });
 
 
