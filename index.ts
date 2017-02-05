@@ -2,7 +2,7 @@
 
 import electron = require('electron')
 
-//TODO: remove this line as soon I find out how solve namespace bug
+//TODO: remove this line as soon I find out how to solve namespace bug
 //for some unknown reason it does find Electron namepace
 import Electron = require('electron')
 
@@ -14,11 +14,12 @@ let Menu = electron.Menu
 let mainWindow: Electron.BrowserWindow
 
 function createWindow() {
+    let screen = require('electron').screen
 
-    mainWindow = new Electron.BrowserWindow({width: 800, height: 600})
+    mainWindow = new Electron.BrowserWindow(screen.getPrimaryDisplay().workArea)
     Menu.setApplicationMenu(null)
-
     mainWindow.loadURL(`file://${__dirname}/index.html`)
+
 
     mainWindow.on('closed', function () {
         mainWindow = null
