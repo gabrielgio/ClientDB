@@ -4,8 +4,7 @@ import {ConnectionService} from '../service/ConnectionService'
 
 @NgModule({
     declarations: [ConComponent],
-    bootstrap: [ConComponent],
-    providers: [ConnectionService]
+    bootstrap: [ConComponent]
 })
 export class ConModule {
 

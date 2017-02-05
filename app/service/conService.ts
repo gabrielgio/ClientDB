@@ -1,7 +1,12 @@
 import {Injectable, Inject} from '@angular/core'
-import {Connection} from './Connection'
-import {IpcService} from "./IpcService";
+import {IpcService} from "./ipcService";
 
+export class Connection {
+
+    public host: string
+    public key: string
+    public id: string
+}
 
 @Injectable()
 export class ConnectionService {

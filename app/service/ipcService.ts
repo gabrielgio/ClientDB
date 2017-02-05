@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-
+import {Connection} from '../service/conService'
 declare var ipcRenderer
 
 export class SaveFile {
@@ -18,4 +18,7 @@ export class IpcService {
         ipcRenderer.sendSync('saveFile', saveFile)
     }
 
+    public getInfo(con: Connection) {
+        return ipcRenderer.sendSync('getInfo', con)
+    }
 }
