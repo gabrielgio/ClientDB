@@ -1,11 +1,10 @@
 import {Component, AfterContentInit, Inject} from '@angular/core'
-import {ConnectionService} from '../service/ConnectionService'
-import {Connection} from '../service/Connection'
+import {ConnectionService, Connection} from '../service/conService'
 
 
 @Component({
     selector: 'con',
-    templateUrl: './app/connections/con.component.html',
+    templateUrl: './app/con/con.component.html',
     providers: [ConnectionService]
 })
 export class ConComponent extends AfterContentInit {

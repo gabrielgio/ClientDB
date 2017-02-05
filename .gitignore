@@ -5,3 +5,5 @@ node_modules/
 *.map
 *.html
 bower_components/
+typings/
+config.json
