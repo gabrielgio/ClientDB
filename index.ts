@@ -10,29 +10,34 @@ const jetpack = require('fs-jetpack')
 
 let app = electron.app
 let dialog = electron.dialog
-let ipc = electron.ipcMain
+let ipcMain = electron.ipcMain
 let BrowserWindow = electron.BrowserWindow
 let Menu = electron.Menu
 
 let mainWindow: Electron.BrowserWindow
 
-ipc.on('loadFile', function (event, arg) {
+ipcMain.on('loadFile', function (event, arg) {
     var data = jetpack.read(arg)
     var objs = data == null ? [] : JSON.parse(data)
     event.returnValue = objs
 });
 
-ipc.on('saveFile', function (event, arg) {
+ipcMain.on('saveFile', function (event, arg) {
     jetpack.write(arg.fileName, JSON.stringify(arg.fileData))
     event.returnValue = null
 });
 
 
-ipc.on('getInfo', async function (event, arg) {
-    var client = new Client(arg.host, arg.key)
-    var item = await client.listDatabasesAsync()
-    event.returnValue = item;
-
+ipcMain.on('getInfo', async function (event, arg) {
+    try{
+        var client = new Client(arg.host, arg.key)
+        await client.openAsync();
+        var item = await client.getAccountInfoAsync()
+        event.sender.send('getInfo-reply', item)
+    }
+    catch(e) {
+        event.sender.send('getInfo-reply', null)
+    }
 });
 
 
