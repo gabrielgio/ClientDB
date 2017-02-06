@@ -1,3 +1,5 @@
+- var reportClass = 'c-black f-500 m-b-20'
+
 div.card
     div.card-header
         h2 Connection
@@ -18,3 +20,23 @@ div.card
                     a.btn.btn-danger.waves-effect(routerLink='/') Cancel
                     button.btn.btn-primary.waves-effect(type='submit' style='margin-left: 15px') Add
                     button.btn.btn-success.waves-effect.pull-right((click)='testCon($event)' type='button') Test Connection
+div.card(*ngIf='passTest')
+    div.card-body.card-padding
+        div.card-header
+            h2 Account Info
+        div.card-body.card-padding
+            p(class=reportClass) DatabasesLink: {{info.DatabasesLink}}
+            p(class=reportClass) MediaLink: {{info.MediaLink}}
+            p(class=reportClass) MaxMediaStorageUsageInMB: {{info.MaxMediaStorageUsageInMB}}
+            p(class=reportClass) CurrentMediaStorageUsageInMB: {{info.CurrentMediaStorageUsageInMB}}
+            p(class=reportClass) ConsumedDocumentStorageInMB: {{info.ConsumedDocumentStorageInMB}}
+            p(class=reportClass) ProvisionedDocumentStorageInMB: {{info.ProvisionedDocumentStorageInMB}}
+            p(class=reportClass) ConsistencyPolicy.defaultConsistencyLevel: {{info.ConsistencyPolicy.defaultConsistencyLevel}}
+            p(class=reportClass) ConsistencyPolicy.maxStalenessPrefix: {{info.ConsistencyPolicy.maxStalenessPrefix}}
+            p(class=reportClass) ConsistencyPolicy.maxStalenessIntervalInSeconds: {{info.ConsistencyPolicy.maxStalenessIntervalInSeconds}}
+            p(class=reportClass) WritableLocations:
+                label(*ngFor='let location of info.WritableLocations') {{location.name}}
+            p(class=reportClass) ReadableLocations:
+                label(*ngFor='let location of info.ReadableLocations') {{location.name}}
+
+
