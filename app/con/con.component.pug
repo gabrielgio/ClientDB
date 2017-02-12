@@ -1,0 +1,18 @@
+div.card
+    div.card-header
+        h2 Stored connections
+    div.card-body.card-padding.table-responsive
+        table.table
+            thead
+                tr
+                    th Name
+                    th Host
+                    th key
+            tbody
+                tr(*ngFor='let con of cons')
+                    td {{con.id}}
+                    td {{con.host}}
+                    td {{con.key}}
+        div.row(style='margin-top: 15px')
+            button.btn.btn-primary.btn-icon.waves-effect.waves-circle.waves-float.pull-right(style='height:50px;width:50px' routerLink="/add")
+                    i.zmdi.zmdi-plus(style='font-size: 23px')
