@@ -23,7 +23,9 @@ export class IpcService {
         return ipcRenderer.send('getInfo', con)
     }
 
-    public getInfoReply(callback){
-        ipcRenderer.on('getInfo-reply', callback)
+    public getInfoReply(callback, sender){
+        ipcRenderer.on('getInfo-reply', (event, args) =>{
+            callback(event, args, sender)
+        })
     }
 }

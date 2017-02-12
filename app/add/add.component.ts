@@ -25,7 +25,6 @@ export class AddComponent extends AfterContentInit {
     private ipc: IpcService
     private ref: ChangeDetectorRef
     private ngZone: NgZone
-    private static add: AddComponent
 
     constructor(@Inject(ConnectionService) conService: ConnectionService,
                 @Inject(Router)router: Router,
@@ -39,28 +38,24 @@ export class AddComponent extends AfterContentInit {
         this.passTest = false
         this.ref = ref
         this.ngZone = ngZone
-
-        AddComponent.add = this
-
-        this.host = 'https://uvk-dev-db.documents.azure.com:443/'
-        this.key = 'WaDxWXjFw9Hx5wATbysUeQ1LIhAYttog2RKWhCgvfXFqsG4hX7VTgMfOW5h8277dtLkI9g28xOsNbuXOfwnHoA=='
     }
 
     ngAfterContentInit(): void {
-        this.ipc.getInfoReply(this.infoReply)
+        this.ipc.getInfoReply(this.infoReply, this)
     }
 
-    private infoReply(event, args) {
+    private infoReply(event, args, sender) {
 
+        var self = <AddComponent> sender;
         //I dont know if this is right way to do it, but It is the only that I go it Working.
-        AddComponent.add.ngZone.run(() => {
+        self.ngZone.run(() => {
             if (args === null)
-                AddComponent.add.passTest = false
+                self.passTest = false
             else {
-                AddComponent.add.info = args
-                AddComponent.add.passTest = true
+                self.info = args
+                self.passTest = true
             }
-            AddComponent.add.ref.markForCheck()
+            self.ref.markForCheck()
         });
     }
 
