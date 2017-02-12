@@ -1,0 +1,26 @@
+div.card
+    div.card-header
+        h2 SQL shell
+    div.card-body.card-padding
+        div.row
+            div.select.fg-line
+                div.col-sm-3
+                    p.c-black.f-500.m-b-20 Connection String
+                    select.form-control('(change)'='onConChange($event.target.value)')
+                        option('*ngFor'='let con of cons') {{con.id}}
+                div.col-sm-3
+                    p.c-black.f-500.m-b-20 Database
+                    select.form-control((change)='onDbChange($event.target.value)')
+                        option('*ngFor'='let db of dbs') {{db.id}}
+                div.col-sm-3
+                    p.c-black.f-500.m-b-20 Collection
+                    select.form-control((change)='onColChange($event.target.value)')
+                        option('*ngFor'='let col of collections') {{col.id}}
+                div.col-sm-3
+                    button.btn.btn-success.waves-effect((click)='play()') Play
+    div.card-body.card-padding
+        div.row
+            div.col-sm-6
+                textarea#textInputCode.CodeMirror
+            div.col-sm-6
+                textarea#textOutputCode.CodeMirror
