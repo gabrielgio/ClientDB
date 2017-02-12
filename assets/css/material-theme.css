@@ -8707,3 +8707,8 @@ html:not(.ie9) .select.fg-line:before {
 /*
  * Vendor overrides
  */
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: 60%;
+}

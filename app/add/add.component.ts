@@ -38,6 +38,7 @@ export class AddComponent extends AfterContentInit {
         this.passTest = false
         this.ref = ref
         this.ngZone = ngZone
+
     }
 
     ngAfterContentInit(): void {
@@ -47,7 +48,7 @@ export class AddComponent extends AfterContentInit {
     private infoReply(event, args, sender) {
 
         var self = <AddComponent> sender;
-        //I dont know if this is right way to do it, but It is the only that I go it Working.
+
         self.ngZone.run(() => {
             if (args === null)
                 self.passTest = false

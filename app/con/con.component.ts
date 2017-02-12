@@ -1,5 +1,5 @@
 import {Component, AfterContentInit, Inject} from '@angular/core'
-import {ConnectionService, Connection} from '../service/conService'
+import {ConnectionService, ClientConnection} from '../service/conService'
 
 
 @Component({
@@ -11,7 +11,7 @@ export class ConComponent extends AfterContentInit {
 
     conService: ConnectionService
 
-    public cons: Connection[]
+    public cons: ClientConnection[]
 
     constructor(@Inject(ConnectionService) conService: ConnectionService) {
         super()
