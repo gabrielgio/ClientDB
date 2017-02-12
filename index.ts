@@ -1,6 +1,6 @@
 /// <reference path="typings/index.d.ts" />
 
-import {Client} from 'documentdb-typescript'
+import {Client, Database, Collection} from 'documentdb-typescript'
 import electron = require('electron')
 
 //TODO: I shall remove this line as soon I find out how to solve this namespace bug
@@ -28,7 +28,19 @@ ipcMain.on('saveFile', function (event, arg) {
 });
 
 
-ipcMain.on('getInfo', async function (event, arg) {
+ipcMain.on('getDatabases', async function (event, arg) {
+    try{
+        var client = new Client(arg.host, arg.key)
+        await client.openAsync();
+        var item = await client.listDatabasesAsync()
+        event.sender.send('getDatabases-reply', item)
+    }
+    catch(e) {
+        event.sender.send('getDatabases-reply', null)
+    }
+});
+
+ipcMain.on('getDatabases', async function (event, arg) {
     try{
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
@@ -37,6 +49,37 @@ ipcMain.on('getInfo', async function (event, arg) {
     }
     catch(e) {
         event.sender.send('getInfo-reply', null)
+    }
+});
+
+ipcMain.on('getCollections', async function (event, arg) {
+    try{
+        var client = new Client(arg.host, arg.key)
+        await client.openAsync();
+        var db = new Database(arg.name, client)
+        await db.openAsync();
+        var item = await db.listCollectionsAsync()
+        event.sender.send('getCollections-reply', item)
+    }
+    catch(e) {
+        event.sender.send('getCollections-reply', null)
+    }
+});
+
+ipcMain.on('queryCollection', async function (event, arg) {
+    try{
+        var client = new Client(arg.host, arg.key)
+        await client.openAsync();
+        var db = new Database(arg.name, client)
+        await db.openAsync();
+        var col = await new Collection(arg.collection, db)
+        await col.openAsync()
+        var q = col.queryDocuments(arg.query)
+        var item = await q.toArray()
+        event.sender.send('queryCollection-reply', item)
+    }
+    catch(e) {
+        event.sender.send('queryCollection-reply', e.message)
     }
 });
 
