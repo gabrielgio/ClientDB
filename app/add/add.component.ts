@@ -39,6 +39,9 @@ export class AddComponent extends AfterContentInit {
         this.ref = ref
         this.ngZone = ngZone
 
+        this.name = ''
+        this.host = ''
+        this.key = ''
     }
 
     ngAfterContentInit(): void {
