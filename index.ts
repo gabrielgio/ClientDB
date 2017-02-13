@@ -40,7 +40,7 @@ ipcMain.on('getDatabases', async function (event, arg) {
     }
 });
 
-ipcMain.on('getDatabases', async function (event, arg) {
+ipcMain.on('getInfo', async function (event, arg) {
     try{
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
@@ -90,7 +90,6 @@ function createWindow() {
     mainWindow = new Electron.BrowserWindow(screen.getPrimaryDisplay().workArea)
     Menu.setApplicationMenu(null)
     mainWindow.loadURL(`file://${__dirname}/index.html`)
-    
     mainWindow.on('closed', function () {
         mainWindow = null
     })
