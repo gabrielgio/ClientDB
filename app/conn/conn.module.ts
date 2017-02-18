@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core'
-import {ConComponent} from './con.component'
-import {ConnectionService} from '../service/ConnectionService'
+import {ConComponent} from './conn.component'
+import {ConnectionService} from '../service/conService'
 
 @NgModule({
     declarations: [ConComponent],
