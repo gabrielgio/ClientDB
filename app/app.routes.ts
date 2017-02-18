@@ -1,4 +1,4 @@
-import {ConComponent} from './con/con.component'
+import {ConComponent} from './conn/conn.component'
 import {AddComponent} from './add/add.component'
 import {ShellComponent} from './shell/shell.component'
 import {Routes, RouterModule} from '@angular/router'

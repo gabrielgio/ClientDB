@@ -3,8 +3,8 @@ import {ConnectionService, ClientConnection} from '../service/conService'
 
 
 @Component({
-    selector: 'con',
-    templateUrl: './app/con/con.component.html',
+    selector: 'conn',
+    templateUrl: './app/conn/conn.component.html',
     providers: [ConnectionService]
 })
 export class ConComponent extends AfterContentInit {
