@@ -12,34 +12,35 @@ OUT=dist/
 EP=./node_modules/.bin/electron-packager
 EB=./node_modules/.bin/electron-builder
 TITLE="ClientDB"
-PACKAGE_VERSION=`(cat package.json \
+PACKAGE_VERSION=$(shell cat package.json \
   | grep version \
   | head -1 \
   | awk -F: '{ print $2 }' \
   | sed 's/[",]//g' \
-  | tr -d '[[:space:]]')`
+  | tr -d '[[:space:]]' \
+  | cut -d':' -f 2)
 
 xz: xz_win xz_osx
 
 xz_win: tar_win xz_linux
-	xz -z $(OUT)$(W)/$(WL).tar -9 -e --threads=0
+	pxz -z $(OUT)$(W)/$(WL)-$(PACKAGE_VERSION).tar -9 -e
 
 xz_osx: tar_osx
-	xz -z $(OUT)$(O)/$(OL).tar -9 -e --threads=0
+	pxz -z $(OUT)$(O)/$(OL)-$(PACKAGE_VERSION).tar -9 -e
 
 xz_linux: tar_linux
-	xz -z $(OUT)$(L)/$(LL).tar -9 -e --threads=0
+	pxz -z $(OUT)$(L)/$(LL)-$(PACKAGE_VERSION).tar -9 -e
 
 tar: tar_win tar_osx tar_linux
 
 tar_win: pack_win
-	tar -cvf $(OUT)$(W)/$(WL).tar $(OUT)$(W)/$(WL)
+	tar -cvf $(OUT)$(W)/$(WL)-$(PACKAGE_VERSION).tar $(OUT)$(W)/$(WL)
 
 tar_osx: pack_osx
-	tar -cvf $(OUT)$(O)/$(OL).tar $(OUT)$(O)/$(OL)
+	tar -cvf $(OUT)$(O)/$(OL)-$(PACKAGE_VERSION).tar $(OUT)$(O)/$(OL)
 
 tar_linux: pack_linux
-	tar -cvf $(OUT)$(L)/$(LL).tar $(OUT)$(L)/$(LL)
+	tar -cvf $(OUT)$(L)/$(LL)-$(PACKAGE_VERSION).tar $(OUT)$(L)/$(LL)
 
 build: build_win build_osx build_linux
 
@@ -76,3 +77,6 @@ clear: clear_win clear_osx clear_linux
 
 start:
 	electron index.js
+
+echo:
+	echo $(PACKAGE_VERSION)
