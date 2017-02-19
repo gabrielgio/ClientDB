@@ -1,7 +1,13 @@
-header.clearfix(id='header' data-me-theme='gray')
+header.clearfix(id='header' data-ma-theme='blue')
     ul.h-inner
-        li.hi-logo.hidden-xs
-            a ClientDB
+        li( class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar")
+            div( class="line-wrap")
+                div( class="line top")
+                div( class="line center")
+                div( class="line bottom")
+        li( class="hi-logo hidden-xs")
+            a(href="index.html") ClientDB
+
 
 section#main
     aside#sidebar.sidebar.c-overflow.mCustomScrollbar._mCs_1_mCS-autoHide(style='overflow: visible;')

@@ -6,13 +6,14 @@ import {AddComponent} from './add/add.component'
 import {ShellComponent} from './shell/shell.component'
 import {routing} from './app.routes'
 import {ConnectionService} from './service/conService'
+import {BaseService} from './service/baseService'
 import {IpcService} from "./service/ipcService";
 
 @NgModule({
     imports: [BrowserModule, routing],
     declarations: [AppComponent,ConComponent, AddComponent, ShellComponent],
     bootstrap: [AppComponent],
-    providers: [ConnectionService, IpcService]
+    providers: [ConnectionService, IpcService, BaseService]
 })
 export class AppModule {
 }

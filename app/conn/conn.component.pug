@@ -10,9 +10,9 @@ div.card
                     th key
             tbody
                 tr(*ngFor='let conn of cons')
-                    td {{con.id}}
-                    td {{con.host}}
-                    td {{con.key}}
+                    td {{conn.id}}
+                    td {{conn.host}}
+                    td {{conn.key}}
         div.row(style='margin-top: 15px')
             button.btn.btn-primary.btn-icon.waves-effect.waves-circle.waves-float.pull-right(style='height:50px;width:50px' routerLink="/add")
                     i.zmdi.zmdi-plus(style='font-size: 23px')

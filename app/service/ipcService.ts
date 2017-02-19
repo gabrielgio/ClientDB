@@ -1,5 +1,8 @@
-import {Injectable} from '@angular/core'
+import {
+    Inject, NgZone, Injectable, ApplicationRef
+} from '@angular/core'
 import {ClientConnection, DatabseConnection, QueryConnection} from '../service/conService'
+
 
 declare var ipcRenderer
 
@@ -11,51 +14,59 @@ export class SaveFile {
 @Injectable()
 export class IpcService {
 
+    constructor(@Inject(ApplicationRef) private ref: ApplicationRef,
+                @Inject(NgZone) private ngZone: NgZone) {
+
+    }
+
     public loadFile(fileName: string): Object {
         return ipcRenderer.sendSync('loadFile', fileName)
+    }
+
+    public getInfo(con: ClientConnection, callback, sender) {
+        var self = this
+        ipcRenderer.once('getInfo-reply', (event, args) => {
+            self.ngZone.run(() => {
+                callback(event, args, sender)
+            })
+            self.ref.tick()
+        })
+        ipcRenderer.send('getInfo', con)
     }
 
     public saveFile(saveFile: SaveFile) {
         ipcRenderer.sendSync('saveFile', saveFile)
     }
 
-    public getInfo(con: ClientConnection) {
-        return ipcRenderer.send('getInfo', con)
-    }
-
-    public getDatabases(con: ClientConnection) {
+    public getDatabases(con: ClientConnection, callback, sender) {
+        var self = this
+        ipcRenderer.once('getDatabases-reply', (event, args) => {
+            self.ngZone.run(() => {
+                callback(event, args, sender)
+                self.ref.tick()
+            })
+        })
         return ipcRenderer.send('getDatabases', con)
     }
 
-    public getCollections(con: DatabseConnection) {
+    public getCollections(con: DatabseConnection, callback, sender) {
+        var self = this
+        ipcRenderer.once('getCollections-reply', (event, args) => {
+            callback(event, args, sender)
+            self.ref.tick()
+        })
         return ipcRenderer.send('getCollections', con)
     }
 
-    public queryCollection(con: QueryConnection) {
+    public queryCollection(con: QueryConnection, callback, sender) {
+        var self = this
+        ipcRenderer.once('queryCollection-reply', (event, args) => {
+            self.ngZone.run(() => {
+                callback(event, args, sender)
+                self.ref.tick()
+            });
+        })
         return ipcRenderer.send('queryCollection', con)
     }
 
-    public queryCollectionReplay(callback, sender){
-        ipcRenderer.on('queryCollection-reply', (event, args) =>{
-            callback(event, args, sender)
-        })
-    }
-
-    public getCollectionsReplay(callback, sender){
-        ipcRenderer.on('getCollections-reply', (event, args) =>{
-            callback(event, args, sender)
-        })
-    }
-
-    public getDatabasesReplay(callback, sender){
-        ipcRenderer.on('getDatabases-reply', (event, args) =>{
-            callback(event, args, sender)
-        })
-    }
-
-    public getInfoReply(callback, sender){
-        ipcRenderer.on('getInfo-reply', (event, args) =>{
-            callback(event, args, sender)
-        })
-    }
 }
