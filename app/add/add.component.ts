@@ -73,14 +73,13 @@ export class AddComponent implements AfterContentInit, OnDestroy {
                 self.passTest = true
             }
             self.isLoading = false
-            self.ref.markForCheck()
         });
     }
 
     public testCon(event) {
         this.isLoading = true
         this.passTest = false
-        var info = this.ipc.getInfoOnce({
+        var info = this.ipc.getInfo({
             host: this.host,
             id: this.name,
             key: this.key
