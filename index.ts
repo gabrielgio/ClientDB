@@ -29,31 +29,37 @@ ipcMain.on('saveFile', function (event, arg) {
 
 
 ipcMain.on('getDatabases', async function (event, arg) {
-    try{
+    try {
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
         var item = await client.listDatabasesAsync()
         event.sender.send('getDatabases-reply', item)
     }
-    catch(e) {
+    catch (e) {
         event.sender.send('getDatabases-reply', null)
     }
 });
 
 ipcMain.on('getInfo', async function (event, arg) {
-    try{
+    try {
+        if (arg.host == null || arg.key == null ||
+            arg.host == "" || arg.key == "") {
+            event.sender.send('getInfo-reply', null)
+            return
+        }
+
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
         var item = await client.getAccountInfoAsync()
         event.sender.send('getInfo-reply', item)
     }
-    catch(e) {
+    catch (e) {
         event.sender.send('getInfo-reply', null)
     }
 });
 
 ipcMain.on('getCollections', async function (event, arg) {
-    try{
+    try {
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
         var db = new Database(arg.name, client)
@@ -61,13 +67,13 @@ ipcMain.on('getCollections', async function (event, arg) {
         var item = await db.listCollectionsAsync()
         event.sender.send('getCollections-reply', item)
     }
-    catch(e) {
+    catch (e) {
         event.sender.send('getCollections-reply', null)
     }
 });
 
 ipcMain.on('queryCollection', async function (event, arg) {
-    try{
+    try {
         var client = new Client(arg.host, arg.key)
         await client.openAsync();
         var db = new Database(arg.name, client)
@@ -78,7 +84,7 @@ ipcMain.on('queryCollection', async function (event, arg) {
         var item = await q.toArray()
         event.sender.send('queryCollection-reply', item)
     }
-    catch(e) {
+    catch (e) {
         event.sender.send('queryCollection-reply', e.message)
     }
 });
@@ -91,7 +97,7 @@ function createWindow() {
 
     mainWindow.loadURL(`file://${__dirname}/index.html`)
     mainWindow.openDevTools()
-    if(process.platform !== 'darwin')
+    if (process.platform !== 'darwin')
         mainWindow.setMenuBarVisibility(false);
     mainWindow.on('closed', function () {
         mainWindow = null
