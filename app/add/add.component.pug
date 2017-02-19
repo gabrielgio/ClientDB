@@ -38,5 +38,10 @@ div.card(*ngIf='passTest')
                 label(*ngFor='let location of info.WritableLocations') {{location.name}}
             p(class=reportClass) ReadableLocations:
                 label(*ngFor='let location of info.ReadableLocations') {{location.name}}
-
+div.card(*ngIf='isLoading')
+    div.card-body.card-padding
+        div.card-body.card-padding
+            div.preloader.pl-xl
+                svg.pl-circular(viewBox='25 25 50 50')
+                    circle.plc-path(cx='50' cy='50' r='20')
 

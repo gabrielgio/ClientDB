@@ -4,7 +4,7 @@ import {Client, Database, Collection} from 'documentdb-typescript'
 import electron = require('electron')
 
 //TODO: I shall remove this line as soon I find out how to solve this namespace bug
-//for some unknown reason it does find Electron namepace
+//for some unknown reason it does not find Electron namepace
 import Electron = require('electron')
 const jetpack = require('fs-jetpack')
 
@@ -90,7 +90,7 @@ function createWindow() {
     mainWindow = new Electron.BrowserWindow(screen.getPrimaryDisplay().workArea)
 
     mainWindow.loadURL(`file://${__dirname}/index.html`)
-
+    mainWindow.openDevTools()
     if(process.platform !== 'darwin')
         mainWindow.setMenuBarVisibility(false);
     mainWindow.on('closed', function () {
