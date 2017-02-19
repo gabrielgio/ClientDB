@@ -26,7 +26,7 @@ function createWindow() {
     mainWindow = new Electron.BrowserWindow(screen.getPrimaryDisplay().workArea)
 
     mainWindow.loadURL(`file://${__dirname}/index.html`)
-    mainWindow.openDevTools()
+    //mainWindow.openDevTools()
     if (process.platform !== 'darwin')
         mainWindow.setMenuBarVisibility(false);
     mainWindow.on('closed', function () {
