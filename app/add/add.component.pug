@@ -19,11 +19,14 @@ div.card
                 div.span4.offset4.text-left
                     a.btn.btn-danger.waves-effect(routerLink='/') Cancel
                     button.btn.btn-primary.waves-effect(type='submit' style='margin-left: 15px') Add
-                    button.btn.btn-success.waves-effect.pull-right((click)='testCon($event)' type='button') Test Connection
+                    button.btn.btn-success.waves-effect.pull-right('*ngIf'='!isLoading' '(click)'='testCon($event)' type='button') Test Connection
+                    div.preloader.pl-sm.pull-right(*ngIf='isLoading')
+                        svg.pl-circular(viewBox='25 25 50 50')
+                            circle.plc-path(cx='50' cy='50' r='20')
 div.card(*ngIf='passTest')
     div.card-body.card-padding
         div.card-header
-            h2 Account Info
+            h2 Connection Info
         div.card-body.card-padding
             p(class=reportClass) DatabasesLink: {{info.DatabasesLink}}
             p(class=reportClass) MediaLink: {{info.MediaLink}}
@@ -38,10 +41,4 @@ div.card(*ngIf='passTest')
                 label(*ngFor='let location of info.WritableLocations') {{location.name}}
             p(class=reportClass) ReadableLocations:
                 label(*ngFor='let location of info.ReadableLocations') {{location.name}}
-div.card(*ngIf='isLoading')
-    div.card-body.card-padding
-        div.card-body.card-padding
-            div.preloader.pl-xl
-                svg.pl-circular(viewBox='25 25 50 50')
-                    circle.plc-path(cx='50' cy='50' r='20')
 

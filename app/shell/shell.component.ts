@@ -125,6 +125,8 @@ export class ShellComponent extends AfterContentInit {
                 self.collections = args
                 if (self.collections.length > 0)
                     self.selectedCol = self.collections[0]
+                else
+                    self.selectedCol = []
             }
             self.ref.markForCheck()
         });

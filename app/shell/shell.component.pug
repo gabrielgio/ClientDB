@@ -7,7 +7,7 @@ div.card
                 div.col-sm-3
                     p.c-black.f-500.m-b-20 Connection String
                     select.form-control('(change)'='onConChange($event.target.value)')
-                        option('*ngFor'='let conn of cons') {{con.id}}
+                        option('*ngFor'='let conn of cons') {{conn.id}}
                 div.col-sm-3
                     p.c-black.f-500.m-b-20 Database
                     select.form-control((change)='onDbChange($event.target.value)')

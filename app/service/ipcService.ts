@@ -1,5 +1,8 @@
-import {Injectable} from '@angular/core'
+import {
+    Inject, NgZone, Injectable, ApplicationRef
+} from '@angular/core'
 import {ClientConnection, DatabseConnection, QueryConnection} from '../service/conService'
+
 
 declare var ipcRenderer
 
@@ -11,8 +14,24 @@ export class SaveFile {
 @Injectable()
 export class IpcService {
 
+    constructor(@Inject(ApplicationRef) private ref: ApplicationRef,
+                @Inject(NgZone) private ngZone: NgZone) {
+
+    }
+
     public loadFile(fileName: string): Object {
         return ipcRenderer.sendSync('loadFile', fileName)
+    }
+
+    public getInfoOnce(con: ClientConnection, callback, sender) {
+        var self = this
+        ipcRenderer.send('getInfo', con)
+        ipcRenderer.once('getInfo-reply', (event, args) => {
+            self.ngZone.run(() => {
+                callback(event, args, sender)
+                self.ref.tick()
+            })
+        })
     }
 
     public saveFile(saveFile: SaveFile) {
@@ -35,26 +54,26 @@ export class IpcService {
         return ipcRenderer.send('queryCollection', con)
     }
 
-    public queryCollectionReplay(callback, sender){
-        ipcRenderer.on('queryCollection-reply', (event, args) =>{
+    public queryCollectionReplay(callback, sender) {
+        ipcRenderer.on('queryCollection-reply', (event, args) => {
             callback(event, args, sender)
         })
     }
 
-    public getCollectionsReplay(callback, sender){
-        ipcRenderer.on('getCollections-reply', (event, args) =>{
+    public getCollectionsReplay(callback, sender) {
+        ipcRenderer.on('getCollections-reply', (event, args) => {
             callback(event, args, sender)
         })
     }
 
-    public getDatabasesReplay(callback, sender){
-        ipcRenderer.on('getDatabases-reply', (event, args) =>{
+    public getDatabasesReplay(callback, sender) {
+        ipcRenderer.on('getDatabases-reply', (event, args) => {
             callback(event, args, sender)
         })
     }
 
-    public getInfoReply(callback, sender){
-        ipcRenderer.on('getInfo-reply', (event, args) =>{
+    public getInfoReply(callback, sender) {
+        ipcRenderer.on('getInfo-reply', (event, args) => {
             callback(event, args, sender)
         })
     }
