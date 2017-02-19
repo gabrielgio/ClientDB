@@ -17,8 +17,6 @@ export class ShellComponent extends AfterContentInit {
     private conService: ConnectionService
     private router: Router
     private ipc: IpcService
-    private ref: ChangeDetectorRef
-    private ngZone: NgZone
 
     cons: ClientConnection[]
     dbs
@@ -33,15 +31,11 @@ export class ShellComponent extends AfterContentInit {
 
     constructor(@Inject(ConnectionService) conService: ConnectionService,
                 @Inject(Router)router: Router,
-                @Inject(IpcService) ipc: IpcService,
-                @Inject(ChangeDetectorRef) ref: ChangeDetectorRef,
-                @Inject(NgZone)ngZone: NgZone) {
+                @Inject(IpcService) ipc: IpcService) {
         super()
         this.conService = conService
         this.router = router
         this.ipc = ipc
-        this.ref = ref
-        this.ngZone = ngZone
     }
 
     public onConChange(item) {
@@ -64,7 +58,7 @@ export class ShellComponent extends AfterContentInit {
             host: this.selectedCon.host,
             collection: this.selectedCol.id,
             query: this.codeInput.getValue()
-        })
+        }, this.queryCollectionReplay, this)
     }
 
     public onColChange(item) {
@@ -94,68 +88,52 @@ export class ShellComponent extends AfterContentInit {
             key: this.selectedCon.key,
             name: this.selectedDb.id,
             host: this.selectedCon.host,
-        })
+        }, this.getCollectionsReplay, this)
     }
 
     private getDatabasesReplay(event, args, sender) {
-
         var self = <ShellComponent> sender;
 
-        self.ngZone.run(() => {
-            if (args != null) {
-                self.dbs = args
-                self.selectedDb = self.dbs[0]
-                self.ipc.getCollections({
-                    id: self.selectedCon.id,
-                    key: self.selectedCon.key,
-                    name: self.selectedDb.id,
-                    host: self.selectedCon.host,
-                })
-            }
-            self.ref.markForCheck()
-        });
+        if (args != null) {
+            sender.dbs = args
+            self.selectedDb = self.dbs[0]
+            self.ipc.getCollections({
+                id: self.selectedCon.id,
+                key: self.selectedCon.key,
+                name: self.selectedDb.id,
+                host: self.selectedCon.host,
+            }, self.getCollectionsReplay, self);
+        }
     }
 
     private getCollectionsReplay(event, args, sender) {
-
         var self = <ShellComponent> sender;
 
-        self.ngZone.run(() => {
-            if (args != null) {
-                self.collections = args
-                if (self.collections.length > 0)
-                    self.selectedCol = self.collections[0]
-                else
-                    self.selectedCol = []
-            }
-            self.ref.markForCheck()
-        });
+        if (args != null) {
+            self.collections = args
+            if (self.collections.length > 0)
+                self.selectedCol = self.collections[0]
+            else
+                self.selectedCol = []
+        }
     }
 
 
     private queryCollectionReplay(event, args, sender) {
 
         var self = <ShellComponent> sender;
-
-        self.ngZone.run(() => {
-            if (args != null) {
-                self.codeOutput.setValue(JSON.stringify(args, null, 2))
-            }
-            self.ref.markForCheck()
-        });
+        if (args != null) {
+            self.codeOutput.setValue(JSON.stringify(args, null, 2))
+        }
     }
 
     ngAfterContentInit(): void {
 
         this.cons = this.conService.getConnections()
 
-        this.ipc.getDatabasesReplay(this.getDatabasesReplay, this)
-        this.ipc.getCollectionsReplay(this.getCollectionsReplay, this)
-        this.ipc.queryCollectionReplay(this.queryCollectionReplay, this)
-
         if (this.cons.length > 0) {
             this.selectedCon = this.cons[0]
-            this.ipc.getDatabases(this.selectedCon)
+            this.ipc.getDatabases(this.selectedCon, this.getDatabasesReplay, this)
         }
 
         this.codeInput = CodeMirror.fromTextArea(document.getElementById('textInputCode'), {
