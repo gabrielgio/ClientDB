@@ -28,8 +28,8 @@ export class IpcService {
         ipcRenderer.once('getInfo-reply', (event, args) => {
             self.ngZone.run(() => {
                 callback(event, args, sender)
-                self.ref.tick()
             })
+            self.ref.tick()
         })
         ipcRenderer.send('getInfo', con)
     }
@@ -53,6 +53,7 @@ export class IpcService {
         var self = this
         ipcRenderer.once('getCollections-reply', (event, args) => {
             callback(event, args, sender)
+            self.ref.tick()
         })
         return ipcRenderer.send('getCollections', con)
     }
@@ -62,6 +63,7 @@ export class IpcService {
         ipcRenderer.once('queryCollection-reply', (event, args) => {
             self.ngZone.run(() => {
                 callback(event, args, sender)
+                self.ref.tick()
             });
         })
         return ipcRenderer.send('queryCollection', con)
