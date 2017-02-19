@@ -17,6 +17,7 @@ export class AddComponent extends AfterContentInit {
     @Input() host: string
     @Input() key: string
     @Input() passTest: boolean
+    @Input() isLoading: boolean
 
     @Input() info
 
@@ -36,6 +37,7 @@ export class AddComponent extends AfterContentInit {
         this.router = router
         this.ipc = ipc
         this.passTest = false
+        this.isLoading = false
         this.ref = ref
         this.ngZone = ngZone
 
@@ -59,12 +61,14 @@ export class AddComponent extends AfterContentInit {
                 self.info = args
                 self.passTest = true
             }
+            self.isLoading = false
             self.ref.markForCheck()
         });
     }
 
     public testCon(event) {
-
+        this.isLoading = true
+        this.passTest = false
         var info = this.ipc.getInfo({
             host: this.host,
             id: this.name,
