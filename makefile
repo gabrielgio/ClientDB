@@ -20,9 +20,9 @@ PACKAGE_VERSION=$(shell cat package.json \
   | tr -d '[[:space:]]' \
   | cut -d':' -f 2)
 
-xz: xz_win xz_osx
+xz: xz_win xz_osx xz_linux
 
-xz_win: tar_win xz_linux
+xz_win: tar_win
 	pxz -z $(OUT)$(W)/$(WL)-$(PACKAGE_VERSION).tar -9 -e
 
 xz_osx: tar_osx
