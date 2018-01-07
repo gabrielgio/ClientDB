@@ -1,5 +1,5 @@
-# Deprecate
-This repos is no being update anymore since Microsft had released a DocumentDB (which now it is called CosmosDB) webclient that doesn't suck.
+# Deprecated
+This repos is no being update anymore since Microsoft had released a DocumentDB, which now it is called CosmosDB, webclient that doesn't suck.
 
 # ClientDB
 
